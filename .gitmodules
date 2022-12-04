@@ -1,0 +1,6 @@
+[submodule "References/galois"]
+	path = References/galois
+	url = https://github.com/mhostetter/galois.git
+[submodule "References/pyfinite"]
+	path = References/pyfinite
+	url = https://github.com/emin63/pyfinite.git
