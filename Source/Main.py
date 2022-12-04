@@ -2,7 +2,7 @@ from Universe import *
 
 
 def main():
-    u = Universe(2, 5)
+    u = Universe(7, 5)
     u.show()
 
 
