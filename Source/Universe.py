@@ -3,7 +3,7 @@ from galois import FieldArray, GF
 
 class Universe:
 
-    def __init__(self, p, d):
+    def __init__(self, p: int, d: int):
         self._domain = GF(p ** d, display="poly")
         assert self._domain.characteristic == p
         assert self._domain.degree == d
@@ -23,7 +23,7 @@ class Universe:
     def traceElement(self, e: FieldArray) -> FieldArray:
         return self._domain.elements[e].field_trace()
 
-    def _getElements(self):
+    def _getElements(self) -> FieldArray:
         return self._domain.elements
 
     elements = property(_getElements)
