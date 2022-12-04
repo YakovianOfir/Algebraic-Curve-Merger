@@ -1,12 +1,10 @@
 from CartesianProduct import CartesianProduct
-from Universe import *
+from FiniteField import *
+from HermitianCurve import HermitianCurve
 
 
 def main():
-    u = Universe(2, 5)
-    p = CartesianProduct(u.elements, u.elements)
-    u.show()
-    p.show()
+    h = HermitianCurve(5)
 
 
 if __name__ == "__main__":

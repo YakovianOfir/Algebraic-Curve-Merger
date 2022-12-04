@@ -1,7 +1,7 @@
 from galois import FieldArray, GF
 
 
-class Universe:
+class FiniteField:
 
     def __init__(self, p: int, d: int):
         self._domain = GF(p ** d, display="poly")
@@ -10,6 +10,9 @@ class Universe:
 
     def __str__(self):
         return self._domain.properties
+
+    def size(self) -> int:
+        return len(self._domain.elements)
 
     def norm(self) -> FieldArray:
         return self._domain.elements.field_norm()
@@ -23,18 +26,11 @@ class Universe:
     def traceElement(self, e: FieldArray) -> FieldArray:
         return self._domain.elements[e].field_trace()
 
+    def getElement(self, i: int) -> FieldArray:
+        return self._domain.elements.get
+
     def _getElements(self) -> FieldArray:
         return self._domain.elements
 
     elements = property(_getElements)
-
-    def show(self):
-        print()
-        print("=" * 60)
-        print("Universe -> \n{}\n".format(self))
-        for i, e in enumerate(self._domain.elements):
-            n, t = self.normElement(e), self.traceElement(e)
-            print("Universe Element (#{:06}) -> (N: {}) (T: {}) [{}]".format(i, str(n), str(t), str(e)))
-        print("=" * 60)
-        print()
 
