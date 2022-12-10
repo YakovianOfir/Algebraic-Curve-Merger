@@ -15,6 +15,9 @@ class FiniteField:
     def __len__(self):
         return len(self._domain.elements)
 
+    def _getElements(self):
+        return self._domain.elements
+
     def normElement(self, e: FieldArray) -> FieldArray:
         return self._domain.elements[e].field_norm()
 
@@ -30,3 +33,4 @@ class FiniteField:
             raise StopIteration
         return self._domain.elements[self._index]
 
+    elements = property(_getElements)

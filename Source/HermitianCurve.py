@@ -1,10 +1,14 @@
 from FiniteUniverse import FiniteUniverse
+from GammaWeights import GammaWeights
 from GeometricLine import GeometricLine
+from FiniteField import FiniteField
 
 
 class HermitianCurve:
 
     def __init__(self, p: int, h: int):
+        self._domain = FiniteField(p, 2)
+        self._gammas = GammaWeights(self._domain)
         self._universe = FiniteUniverse(p, h)
         self._curve = self._analyzeCurve()
         assert len(self._curve) == p ** (h + 2)
@@ -14,7 +18,6 @@ class HermitianCurve:
         universeElements = self._universe.getIterator()
         for e in universeElements:
             if self.isCurveElement(e):
-                print("Found Hermitian curve point. -> ({})".format(str(e)))
                 curve.append(e)
         return curve
 
@@ -34,10 +37,7 @@ class HermitianCurve:
             for p2 in self._curve:
                 if p1 == p2:
                     continue
-                if p1[0] == p2[0]:
-                    continue
-                line = GeometricLine(p1, p2)
-                print("Found Hermitian curve line. -> ({})".format(line))
+                line = GeometricLine(p1, p2, self._domain, self._gammas)
                 lines.append(line)
         return lines
 

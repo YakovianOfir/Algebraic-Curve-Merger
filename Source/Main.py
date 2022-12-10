@@ -1,22 +1,11 @@
-import sys
-
 from AlgebraicMerger import AlgebraicMerger
-from FiniteUniverse import FiniteUniverse
-from HermitianCurve import HermitianCurve
+from sys import argv
 
 
-def mainOld(p: int):
-    agm = AlgebraicMerger(p)
-
-    if agm.assesIntersection():
-        print("Theorem holds for prime -> [(p) = ({})]".format(p))
-    else:
-        print("Theorem does not hold for prime -> [(p) = ({})]".format(p))
-
-
-def mainNew(p: int, h: int):
-    curve = HermitianCurve(p, h)
+def main(p: int, h: int):
+    agm = AlgebraicMerger(p, h)
+    agm.analyzeIntersection()
 
 
 if __name__ == "__main__":
-    mainNew(int(sys.argv[1]), int(sys.argv[2]))
+    main(int(argv[1]), int(argv[2]))

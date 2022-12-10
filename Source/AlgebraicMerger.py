@@ -8,15 +8,10 @@ class AlgebraicMerger:
         self._h = h
         self._curve = HermitianCurve(p, h)
 
-    def assesIntersection(self) -> bool:
+    def analyzeIntersection(self):
         for line in self._curve.getLines():
             count = 0
-            if line.slope() == 0:
-                continue
             for p in self._curve.getCurve():
                 if line.contains(p):
                     count = count + 1
             print("Found Hermitian intersection -> (L: {}) (I: {})".format(line, count))
-            if count != (self._p + 1):
-                return False
-        return True
