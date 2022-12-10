@@ -8,10 +8,10 @@ class CartesianProduct:
     def __init__(self, X: FiniteField, Y: FiniteField):
         self._X = X
         self._Y = Y
-        self._P = CartesianProduct.Apply(X.elements, Y.elements)
+        self._P = CartesianProduct._Apply(X.elements, Y.elements)
 
     @staticmethod
-    def Apply(X: ndarray, Y: ndarray) -> ndarray:
+    def _Apply(X: ndarray, Y: ndarray) -> ndarray:
         return np.transpose([np.tile(X, len(Y)), np.repeat(Y, len(X))])
 
     def _X(self) -> ndarray:
