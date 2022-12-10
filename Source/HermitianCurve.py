@@ -1,35 +1,32 @@
-from CartesianProduct import CartesianProduct
+from FiniteUniverse import FiniteUniverse
 from GeometricLine import GeometricLine
-from FiniteField import FiniteField
-from numpy import ndarray
 
 
 class HermitianCurve:
 
-    def __init__(self, p: int):
-        self._universe = HermitianCurve._CreateUniverse(p)
-        self._curve = HermitianCurve._AnalyzeCurve(self._universe)
-        assert len(self._universe) == p ** 4
-        assert len(self._curve) == p ** 3
+    def __init__(self, p: int, h: int):
+        self._universe = FiniteUniverse(p, h)
+        self._curve = self._analyzeCurve()
+        assert len(self._curve) == p ** (h + 2)
 
-    @staticmethod
-    def _CreateUniverse(p: int) -> CartesianProduct:
-        Fq = FiniteField(p, 2)
-        assert len(Fq) == p ** 2
-        return CartesianProduct(Fq, Fq)
-
-    @staticmethod
-    def _AnalyzeCurve(universe: CartesianProduct) -> ndarray:
-        print("Constructing Hermitian curve. [Fq] -> \n{}".format(str(universe.X)))
+    def _analyzeCurve(self):
         curve = []
-        for i, j in universe.P:
-            x, y = universe.get(i, j)
-            xt = universe.X.traceElement(x)
-            yn = universe.Y.normElement(y)
-            if xt == yn:
-                print("Found Hermitian curve point. -> ({}, {})".format(str(x), str(y)))
-                curve.append((x, y))
+        universeElements = self._universe.getIterator()
+        for e in universeElements:
+            if self.isCurveElement(e):
+                print("Found Hermitian curve point. -> ({})".format(str(e)))
+                curve.append(e)
         return curve
+
+    def isCurveElement(self, e) -> bool:
+        for i in range(len(e) - 1):
+            x = e[i]
+            y = e[i + 1]
+            xn = self._universe.getAxis(i).normElement(x)
+            yt = self._universe.getAxis(i + 1).traceElement(y)
+            if xn != yt:
+                return False
+        return True
 
     def getLines(self) -> [GeometricLine]:
         lines = []

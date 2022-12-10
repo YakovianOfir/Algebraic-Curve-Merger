@@ -1,36 +1,36 @@
-from CartesianProduct import CartesianProduct
 from FiniteField import FiniteField
+from itertools import product
 
 
 class FiniteUniverse:
 
     def __init__(self, p: int, h: int):
         self._p = p
-        self._h = p
-        self._universe = FiniteUniverse._CreateUniverse(p, h)
-        print("Created finite universe.[Size: {}]".format(len(self)))
-
-    @staticmethod
-    def _CreateUniverseQuadrant(p: int) -> CartesianProduct:
-        Fq = FiniteField(p, 2)
-        quadrant = CartesianProduct(Fq, Fq)
-        assert len(Fq) == p ** 2
-        assert len(quadrant) == p ** 4
-
-    @staticmethod
-    def _CreateUniverse(p: int, h: int) -> [CartesianProduct]:
-        quadrants = []
-        for i in range(0, h - 1):
-            print("Creating Universe quadrant. [Fq x Fq] -> [{}, {}]".format(i, i + 1))
-            quadrants.append(FiniteUniverse._CreateUniverseQuadrant(p))
-        assert len(quadrants) == (h - 1)
-        return quadrants
-
-    def axisCount(self):
-        return self._h + 1
-
-    def axisSize(self):
-        return self._p ** 2
+        self._h = h
+        self._universe = self._createUniverse()
 
     def __len__(self):
-        return self.axisCount() * self.axisCount()
+        return self.axisSize() ** self.axisCount()
+
+    def _createUniverse(self) -> [FiniteField]:
+        axisSystem = []
+        for i in range(0, self.axisCount()):
+            axisSystem.append(self._createUniverseAxis())
+        return axisSystem
+
+    def _createUniverseAxis(self) -> FiniteField:
+        Fq = FiniteField(self._p, 2)
+        assert len(Fq) == self.axisSize()
+        return Fq
+
+    def axisCount(self) -> int:
+        return self._h + 1
+
+    def axisSize(self) -> int:
+        return self._p ** 2
+
+    def getAxis(self, i: int) -> FiniteField:
+        return self._universe[i]
+
+    def getIterator(self):
+        return product(*self._universe)

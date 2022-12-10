@@ -7,6 +7,7 @@ class FiniteField:
         self._domain = GF(p ** d, display="poly")
         assert self._domain.characteristic == p
         assert self._domain.degree == d
+        self._index = -1
 
     def __str__(self):
         return self._domain.properties
@@ -20,8 +21,12 @@ class FiniteField:
     def traceElement(self, e: FieldArray) -> FieldArray:
         return self._domain.elements[e].field_trace()
 
-    def _getElements(self) -> FieldArray:
-        return self._domain.elements
+    def __iter__(self):
+        return self
 
-    elements = property(_getElements)
+    def __next__(self):
+        self._index += 1
+        if self._index >= len(self._domain.elements):
+            raise StopIteration
+        return self._domain.elements[self._index]
 

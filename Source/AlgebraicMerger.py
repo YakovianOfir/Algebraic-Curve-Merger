@@ -3,9 +3,10 @@ from HermitianCurve import HermitianCurve
 
 class AlgebraicMerger:
 
-    def __init__(self, p: int):
-        self._curve = HermitianCurve(p)
+    def __init__(self, p: int, h: int):
         self._p = p
+        self._h = h
+        self._curve = HermitianCurve(p, h)
 
     def assesIntersection(self) -> bool:
         for line in self._curve.getLines():
