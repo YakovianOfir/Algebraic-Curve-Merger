@@ -1,26 +1,16 @@
-from CartesianProduct import CartesianProduct
-from FiniteField import *
-from HermitianCurve import HermitianCurve
+import sys
+
+from AlgebraicMerger import AlgebraicMerger
 
 
-def main():
-    # print("=" * 60)
-    # HermitianCurve(2)
-    # print("=" * 60)
-    # HermitianCurve(3)
-    # print("=" * 60)
-    # HermitianCurve(5)
-    # print("=" * 60)
-    # HermitianCurve(7)
-    # print("=" * 60)
-    # HermitianCurve(11)
-    # print("=" * 60)
-    # HermitianCurve(13)
-    # print("=" * 60)
-    # HermitianCurve(17)
-    # print("=" * 60)
-    # HermitianCurve(19)
+def main(p: int):
+    agm = AlgebraicMerger(p)
+
+    if agm.assesIntersection():
+        print("Theorem holds for prime -> [(p) = ({})]".format(p))
+    else:
+        print("Theorem does not hold for prime -> [(p) = ({})]".format(p))
 
 
 if __name__ == "__main__":
-    main()
+    main(int(sys.argv[1]))
